@@ -7,14 +7,14 @@ with open('schema.sql') as f:
 
 cur = connection.cursor()
 
-cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('DUPONT', 'Emilie', '123, Rue des Lilas, 75001 Paris'))
-cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('LEROUX', 'Lucas', '456, Avenue du Soleil, 31000 Toulouse'))
-cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('MARTIN', 'Amandine', '789, Rue des Érables, 69002 Lyon'))
-cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('TREMBLAY', 'Antoine', '1010, Boulevard de la Mer, 13008 Marseille'))
-cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('LAMBERT', 'Sarah', '222, Avenue de la Liberté, 59000 Lille'))
-cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('GAGNON', 'Nicolas', '456, Boulevard des Cerisiers, 69003 Lyon'))
-cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('DUBOIS', 'Charlotte', '789, Rue des Roses, 13005 Marseille'))
-cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)",('LEFEVRE', 'Thomas', '333, Rue de la Paix, 75002 Paris'))
+# Sample users (passwords are plain-text for simplicity; in production, hash them with e.g., werkzeug.security)
+cur.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)", ('admin', 'adminpass', 'admin'))
+cur.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)", ('user1', 'userpass', 'user'))
+
+# Sample books
+cur.execute("INSERT INTO books (title, author, available) VALUES (?, ?, ?)", ('The Great Gatsby', 'F. Scott Fitzgerald', 1))
+cur.execute("INSERT INTO books (title, author, available) VALUES (?, ?, ?)", ('1984', 'George Orwell', 1))
+cur.execute("INSERT INTO books (title, author, available) VALUES (?, ?, ?)", ('To Kill a Mockingbird', 'Harper Lee', 0))  # Borrowed example
 
 connection.commit()
 connection.close()

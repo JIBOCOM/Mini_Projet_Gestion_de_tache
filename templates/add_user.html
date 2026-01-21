@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Add User</title>
+</head>
+<body>
+    <h1>Add New User</h1>
+    <form method="POST">
+        <label>Username:</label><input type="text" name="username" required><br>
+        <label>Password:</label><input type="password" name="password" required><br>
+        <label>Role:</label>
+        <select name="role">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select><br>
+        <button type="submit">Add</button>
+    </form>
+</body>
+</html>

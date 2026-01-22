@@ -1,20 +1,30 @@
 import sqlite3
 
-connection = sqlite3.connect('database.db')
+def init_db():
+    # 1. Connexion (le fichier sera créé s'il n'existe pas)
+    connection = sqlite3.connect('database.db')
 
-with open('schema.sql') as f:
-    connection.executescript(f.read())
+    # 2. Exécuter le script SQL pour créer les tables
+    with open('schema.sql', encoding='utf-8') as f:
+        connection.executescript(f.read())
 
-cur = connection.cursor()
+    # 3. Insérer quelques tâches de test
+    cur = connection.cursor()
 
-# Sample users (passwords are plain-text for simplicity; in production, hash them with e.g., werkzeug.security)
-cur.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)", ('admin', 'adminpass', 'admin'))
-cur.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)", ('user1', 'userpass', 'user'))
+    sample_tasks = [
+        ("Réviser le cours de réseau", "Chapitre TCP/IP + routage", "2026-01-25", 0),
+        ("Préparer le mini-projet", "Coder la gestion des tâches et tester", "2026-01-28", 0),
+        ("Envoyer le lien Alwaysdata", "Vérifier que le site est en ligne", "2026-01-30", 0),
+    ]
 
-# Sample books
-cur.execute("INSERT INTO books (title, author, available) VALUES (?, ?, ?)", ('The Great Gatsby', 'F. Scott Fitzgerald', 1))
-cur.execute("INSERT INTO books (title, author, available) VALUES (?, ?, ?)", ('1984', 'George Orwell', 1))
-cur.execute("INSERT INTO books (title, author, available) VALUES (?, ?, ?)", ('To Kill a Mockingbird', 'Harper Lee', 0))  # Borrowed example
+    cur.executemany(
+        "INSERT INTO tasks (title, description, due_date, completed) VALUES (?, ?, ?, ?)",
+        sample_tasks
+    )
 
-connection.commit()
-connection.close()
+    connection.commit()
+    connection.close()
+    print("Base de données initialisée avec des tâches de test.")
+
+if __name__ == "__main__":
+    init_db()
